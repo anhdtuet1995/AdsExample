@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Mã quảng cáo được cấp. Cái này check với bên hỗ trợ tích hợp quảng cáo
      */
-    private String zoneId = "2027131";
+    private String zoneId1 = "2027131";
+    private String zoneId2 = "2027132";
+    private String zoneId3 = "2027133";
 
     /**
      * Đây là id user, cái này tùy thuộc vào server trả ra là gì, nếu không có thì truyền empty l
@@ -101,7 +103,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Gửi request lấy quảng cáo
                 adsManager.request(TAG, requestId, new AdsRequest.ReaderParameter(userId, new ArrayList<Zone>() {{
-                    add(new Zone(zoneId));
+                    add(new Zone(zoneId1));
+                    add(new Zone(zoneId2));
+                    add(new Zone(zoneId3));
                 }}, new ArrayList<String>() {{
                     // Fix cứng
                     add("1");
@@ -112,10 +116,23 @@ public class MainActivity extends AppCompatActivity {
             public void requestAdsSuccess(String id, String requestId, List<AdsManager.AdsInfo> adsInfo) {
                 super.requestAdsSuccess(id, requestId, adsInfo);
                 if (!TAG.equals(id)) return;
+                if (adsInfo == null) return;
                 runOnUiThread(() -> {
-                    ConstraintLayout constraintLayout = findViewById(R.id.ads_parent);
-                    // Add quảng cáo vào view, AdsData là thông tin về quảng cáo
-                    AdsData info = adsManager.addAds(AdsForm.normal, constraintLayout, TAG, requestId, adsInfo.get(0).zoneId);
+                    for (AdsManager.AdsInfo item : adsInfo) {
+                        ConstraintLayout constraintLayout = null;
+                        if (item == null) {
+                            continue;
+                        } else if (zoneId1.equals(item.zoneId)) {
+                            constraintLayout = findViewById(R.id.zone1);
+                        } else if (zoneId2.equals(item.zoneId)) {
+                            constraintLayout = findViewById(R.id.zone2);
+                        } else if (zoneId3.equals(item.zoneId)) {
+                            constraintLayout = findViewById(R.id.zone3);
+                        }
+                        if (constraintLayout != null) {
+                            AdsData info = adsManager.addAds(constraintLayout, TAG, requestId, item.zoneId);
+                        }
+                    }
                 });
             }
         });

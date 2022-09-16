@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void initSuccess() {
                 super.initSuccess();
-                // Đây là url và channel bên báo của bên tích hợp, nếu không có thì truyền empty
+                // Đây là url và channel bên báo của bên tích hợp
                 String url = "https://docbao24h.me/tin-tuc";
                 String channel = "https://docbao24h.me//home";
 

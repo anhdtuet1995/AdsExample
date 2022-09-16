@@ -1,0 +1,83 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.1"
+//        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
+    }
+}
+
+allprojects {
+//    apply plugin: "com.jfrog.artifactory"
+//    apply plugin: 'maven-publish'
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url "https://jitpack.io" }
+        maven {
+            url 'https://jrepo.sohatv.vn/artifactory/MysohaSDK'
+        }
+        maven {
+            url 'https://sohames.jfrog.io/artifactory/vcc-sdk-ads-gradle-dev-local/'
+        }
+    }
+}
+
+//project('ahihi') {
+//    artifactoryPublish.dependsOn('build')
+//    publishing {
+//        publications {
+//            aar(MavenPublication) {
+//                groupId = group
+//                artifactId = project.getName()
+//                version = currentVersion
+//                // Tell maven to prepare the generated "*.aar" file for publishing
+//                artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+//
+//                pom.withXml {
+//                    def dependencies = asNode().appendNode("dependencies")
+//                    configurations.api.allDependencies.each {
+//                        def dependency = dependencies.appendNode("dependency")
+//                        print(it.group)
+//                        dependency.appendNode("groupId", it.group)
+//                        dependency.appendNode("artifactId", it.name)
+//                        dependency.appendNode("version", it.version)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    artifactoryPublish {
+//        publications(publishing.publications.aar)
+//    }
+//}
+//
+//artifactory {
+//    clientConfig.setIncludeEnvVars(true)
+//    clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new Date().toString())
+//
+//    contextUrl = "${artifactory_contextUrl}"
+//    publish {
+//        repository {
+//            repoKey = 'testabc-gradle-dev' // The Artifactory repository key to publish to
+//            username = "${artifactory_user}" // The publisher user name
+//            password = "${artifactory_password}" // The publisher password
+//        }
+//        defaults {
+//            publications('app', 'aar')
+//            publishArtifacts = true
+//            properties = ['qa.level': 'basic', 'dev.team' : 'core']
+//            publishPom = true
+//
+//        }
+//    }
+//}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

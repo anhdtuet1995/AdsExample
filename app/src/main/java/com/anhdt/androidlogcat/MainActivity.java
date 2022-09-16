@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     ConstraintLayout constraintLayout = findViewById(R.id.ads_parent);
                     // Add quảng cáo vào view
-                    AdsData info = adsManager.addAds(AdsForm.popup, constraintLayout, TAG, requestId, adsInfo.get(0).zoneId);
+                    AdsData info = adsManager.addAds(AdsForm.normal, constraintLayout, TAG, requestId, adsInfo.get(0).zoneId);
                 });
             }
         });

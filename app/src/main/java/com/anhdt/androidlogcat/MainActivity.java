@@ -35,21 +35,26 @@ public class MainActivity extends AppCompatActivity {
 
         initAdsSdk(this, "anhdt", "anhdt@gmail.com", "0123456789", "anhdt", "anhdt");
 
-        new Thread(() -> AndroidNetworking.get("https://api.github.com/users/anhdtuet1995")
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AndroidNetworking.get("https://api.github.com/users/anhdtuet1995")
+                        .setPriority(Priority.LOW)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("anh.dt2", "Test = " + response.toString());
-                    }
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d("anh.dt2", "Test = " + response.toString());
+                            }
 
-                    @Override
-                    public void onError(ANError anError) {
-                        Log.d("anh.dt2", "Test e = " + anError.getMessage());
-                    }
-                })).start();
+                            @Override
+                            public void onError(ANError anError) {
+                                Log.d("anh.dt2", "Test e = " + anError.getMessage());
+                            }
+                        });
+            }
+        }).start();
 
     }
 

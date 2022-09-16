@@ -3,16 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Test/AndroidLogcat/app/src/main/res/drawable/ic_audiotrack_black_24dp.xml" value="0.1" />
-        <entry key="..\:/Test/AndroidLogcat/app/src/main/res/drawable/ic_backup_black_24dp.xml" value="0.1" />
-        <entry key="..\:/Test/AndroidLogcat/app/src/main/res/drawable/ic_camera_black_24dp.xml" value="0.1" />
         <entry key="..\:/Test/AndroidLogcat/app/src/main/res/layout/activity_main.xml" value="0.14588688946015424" />
         <entry key="..\:/Test/AndroidLogcat/app/src/main/res/layout/activity_test.xml" value="0.14588688946015424" />
-        <entry key="..\:/Test/AndroidLogcat/app/src/main/res/menu/menu_navigation_with_view_pager.xml" value="0.25877192982456143" />
+        <entry key="..\:/Work/Project/Android/trainning/AdsExample/app/src/main/res/layout/activity_main.xml" value="0.21458333333333332" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

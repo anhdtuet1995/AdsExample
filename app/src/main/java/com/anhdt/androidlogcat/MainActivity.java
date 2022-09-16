@@ -38,8 +38,15 @@ public class MainActivity extends AppCompatActivity {
      * Nếu trên 1 màn hình mỗi zoneid chỉ có hiển thị ở 1 nơi duy nhất thì tham số này không quan trọng, fix 1 String bất kì nhưng không empty  hoặc null
      */
     private String requestId = "1";
-    private String zoneId = "2026943";
 
+    /**
+     * Mã quảng cáo được cấp. Cái này check với bên hỗ trợ tích hợp quảng cáo
+     */
+    private String zoneId = "2027131";
+
+    /**
+     * Đây là id user, cái này tùy thuộc vào server trả ra là gì, nếu không có thì truyền empty l
+     */
     private String userId = "userId_1000223";
 
     private ActivityMainBinding binding;
@@ -83,17 +90,22 @@ public class MainActivity extends AppCompatActivity {
         adsManager = AdsManager.getInstance();
         adsManager.initialize(parameter);
 
-        // Đăng ký nhận callback về màn hình
+        // Đăng ký nhận callback về
         adsManager.callbackRegister(TAG, new AdsManagerCallback() {
             @Override
             public void initSuccess() {
                 super.initSuccess();
+                // Đây là url và channel bên báo của bên tích hợp, nếu không có thì truyền empty
+                String url = "https://docbao24h.me/tin-tuc";
+                String channel = "https://docbao24h.me//home";
+
                 // Gửi request lấy quảng cáo
                 adsManager.request(TAG, requestId, new AdsRequest.ReaderParameter(userId, new ArrayList<Zone>() {{
                     add(new Zone(zoneId));
                 }}, new ArrayList<String>() {{
+                    // Fix cứng
                     add("1");
-                }}, "https://app.kenh14.vn/home&v=5.1.51", "https://app.kenh14.vn/home"));
+                }}, url, channel));
             }
 
             @Override
@@ -102,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!TAG.equals(id)) return;
                 runOnUiThread(() -> {
                     ConstraintLayout constraintLayout = findViewById(R.id.ads_parent);
-                    // Add quảng cáo vào view
+                    // Add quảng cáo vào view, AdsData là thông tin về quảng cáo
                     AdsData info = adsManager.addAds(AdsForm.normal, constraintLayout, TAG, requestId, adsInfo.get(0).zoneId);
                 });
             }

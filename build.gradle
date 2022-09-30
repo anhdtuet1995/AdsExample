@@ -17,10 +17,6 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
-        maven { url "https://jitpack.io" }
-        maven {
-            url 'https://jrepo.sohatv.vn/artifactory/MysohaSDK'
-        }
         maven {
             url 'https://sohames.jfrog.io/artifactory/vcc-sdk-ads-gradle-dev-local/'
         }

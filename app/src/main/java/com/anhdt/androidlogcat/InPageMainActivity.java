@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.anhdt.androidlogcat.databinding.ActivityInpageBinding;
 import com.anhdt.androidlogcat.databinding.ActivityMainBinding;
 
 import org.json.JSONObject;
@@ -31,9 +34,9 @@ import vcc.viv.ads.bin.Zone;
 import vcc.viv.ads.bin.adsenum.AdsBrowser;
 import vcc.viv.ads.bin.adsenum.AdsForm;
 
-public class MainActivity extends AppCompatActivity {
+public class InPageMainActivity extends AppCompatActivity {
 
-    private String TAG = MainActivity.class.getSimpleName();
+    private String TAG = InPageMainActivity.class.getSimpleName();
     /**
      * Nếu trên 1 màn hình mỗi zoneid chỉ có hiển thị ở 1 nơi duy nhất thì tham số này không quan trọng, fix 1 String bất kì nhưng không empty  hoặc null
      */
@@ -42,25 +45,35 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Mã quảng cáo được cấp. Cái này check với bên hỗ trợ tích hợp quảng cáo
      */
-    private String zoneId1 = "2027359";
-    private String zoneId2 = "2027132";
-    private String zoneId3 = "2027133";
+    private String zoneId = "2027360";
 
     /**
      * Đây là id user, cái này tùy thuộc vào server trả ra là gì, nếu không có thì truyền empty l
      */
     private String userId = "userId_1000223";
 
-    private ActivityMainBinding binding;
+    private ActivityInpageBinding binding;
     private AdsManager adsManager;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_inpage);
 
         initAdsSdk(this, "anhdt", "anhdt@gmail.com", "0123456789", "anhdt", "anhdt");
+
+        binding.layerView1.setOnClickListener(v -> {
+        });
+        binding.layerView2.setOnClickListener(v -> {
+        });
+        binding.emptyView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                AdsManager.getInstance().click(event, TAG, requestId, zoneId);
+                return true;
+            }
+        });
 
         new Thread(new Runnable() {
             @Override
@@ -69,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                         .setPriority(Priority.LOW)
                         .build()
                         .getAsJSONObject(new JSONObjectRequestListener() {
-
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.d("anh.dt2", "Test = " + response.toString());
@@ -103,9 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Gửi request lấy quảng cáo
                 adsManager.request(TAG, requestId, new AdsRequest.ReaderParameter(userId, new ArrayList<Zone>() {{
-                    add(new Zone(zoneId1));
-                    add(new Zone(zoneId2));
-                    add(new Zone(zoneId3));
+                    add(new Zone(zoneId));
                 }}, new ArrayList<String>() {{
                     // Fix cứng
                     add("1");
@@ -122,15 +132,11 @@ public class MainActivity extends AppCompatActivity {
                         ConstraintLayout constraintLayout = null;
                         if (item == null) {
                             continue;
-                        } else if (zoneId1.equals(item.zoneId)) {
-                            constraintLayout = binding.zone1;
-                        } else if (zoneId2.equals(item.zoneId)) {
-                            constraintLayout = binding.zone2;
-                        } else if (zoneId3.equals(item.zoneId)) {
-                            constraintLayout = binding.zone3;
+                        } else if (zoneId.equals(item.zoneId)) {
+                            constraintLayout = binding.adsLayout;
                         }
                         if (constraintLayout != null) {
-                            AdsData info = adsManager.addAds(constraintLayout, TAG, requestId, item.zoneId);
+                            AdsData info = adsManager.addAds(AdsForm.inPage, constraintLayout, TAG, requestId, item.zoneId);
                         }
                     }
                 });

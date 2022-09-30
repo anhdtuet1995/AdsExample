@@ -32,7 +32,7 @@
                 android:resource="@xml/file_providers" />
         </provider>
         <activity
-            android:name=".MainActivity"
+            android:name=".InPageMainActivity"
             android:configChanges="uiMode"
             android:exported="true">
             <intent-filter>
